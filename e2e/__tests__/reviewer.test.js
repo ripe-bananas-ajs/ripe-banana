@@ -37,7 +37,7 @@ describe('reviewers api', () => {
       postReviewer({ name: 'sam', company: 'sam co' }),
     ])
       .then(() => {
-        return request 
+        return request
           .get('/api/reviewers')
           .expect(200);
       })
@@ -82,5 +82,15 @@ describe('reviewers api', () => {
         expect(body.name).toBe('abbey');
       });
   });
+
+  it('deletes a reviewer', () => {
+    return postReviewer(data)
+      .then(reviewer => {
+        return request
+          .delete(`/api/reviewers/${reviewer._id}`)
+          .expect(200);
+      });
+  });
+
 
 });
