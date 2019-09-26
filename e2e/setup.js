@@ -1,5 +1,5 @@
 const connect = require('../lib/connect');
-const TEST_DB_URL = 'mongodb://localhost:27017/star-wars-movies-test';
+const TEST_DB_URL = 'mongodb://localhost:27017/reviewers-test';
 const mongoose = require('mongoose');
 
 beforeAll(() => {
