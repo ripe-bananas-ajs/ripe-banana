@@ -56,7 +56,6 @@ describe('reviewers api', () => {
   it('gets reviewer by id', () => {
     return postReviewer(data)
       .then(reviewer => {
-        console.log(reviewer);
         return request
           .get(`/api/reviewers/${reviewer._id}`)
           .expect(200)
@@ -67,6 +66,20 @@ describe('reviewers api', () => {
               ...data
             });
           });
+      });
+  });
+
+  it('updates reviewer', () => {
+    return postReviewer(data)
+      .then(reviewer => {
+        reviewer.name = 'abbey';
+        return request
+          .put(`/api/reviewers/${reviewer._id}`)
+          .send(reviewer)
+          .expect(200);
+      })
+      .then(({ body }) => {
+        expect(body.name).toBe('abbey');
       });
   });
 
