@@ -2,10 +2,7 @@ const request = require('../request');
 const db = require('../db');
 const { ObjectId } = require('mongoose').Types;
 
-
-
 describe('film api', () => {
-
   beforeEach(() => {
     return Promise.all([
       db.dropCollection('films'),
@@ -33,7 +30,11 @@ describe('film api', () => {
     title: 'Some bad movie',
     studio: '',
     released: 1969,
-    cast: []
+    cast: [
+      {
+        role: 'Billy'
+      }
+    ]
   };
 
   it('posting a film', () => {
@@ -42,7 +43,7 @@ describe('film api', () => {
       .send(actor)
       .expect(200)
       .then(({ body }) => {
-        film.cast[0] = body._id;
+        film.cast[0].actor = body._id;
         return request
           .post('/api/studios')
           .send(studio)
@@ -56,12 +57,22 @@ describe('film api', () => {
           });
       })
       .then(film => {
-
-        expect(film).toMatchInlineSnapshot();
-
+        expect(film.body).toMatchInlineSnapshot(`
+          Object {
+            "__v": 0,
+            "_id": "5d8e80f5f3d4df0fdf9acfb2",
+            "cast": Array [
+              Object {
+                "_id": "5d8e80f5f3d4df0fdf9acfb3",
+                "actor": "5d8e80f5f3d4df0fdf9acfb0",
+                "role": "Billy",
+              },
+            ],
+            "released": 1969,
+            "studio": "5d8e80f5f3d4df0fdf9acfb1",
+            "title": "Some bad movie",
+          }
+        `);
       });
   });
-
-
-
 });
