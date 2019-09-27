@@ -64,16 +64,16 @@ describe('film api', () => {
       expect(film).toMatchInlineSnapshot(`
         Object {
           "__v": 0,
-          "_id": "5d8e84208c930c12da7cd413",
+          "_id": "5d8e8c1620446f5fd8268aa4",
           "cast": Array [
             Object {
-              "_id": "5d8e84208c930c12da7cd414",
-              "actor": "5d8e84208c930c12da7cd411",
+              "_id": "5d8e8c1620446f5fd8268aa5",
+              "actor": "5d8e8c1620446f5fd8268aa2",
               "role": "Billy",
             },
           ],
           "released": 1969,
-          "studio": "5d8e84208c930c12da7cd412",
+          "studio": "5d8e8c1620446f5fd8268aa3",
           "title": "Some bad movie",
         }
       `);
@@ -89,20 +89,100 @@ describe('film api', () => {
           expect(body).toMatchInlineSnapshot(`
             Object {
               "__v": 0,
-              "_id": "5d8e84208c930c12da7cd417",
+              "_id": "5d8e8c1620446f5fd8268aa8",
               "cast": Array [
                 Object {
-                  "_id": "5d8e84208c930c12da7cd418",
-                  "actor": "5d8e84208c930c12da7cd415",
+                  "_id": "5d8e8c1620446f5fd8268aa9",
+                  "actor": Object {
+                    "_id": "5d8e8c1620446f5fd8268aa6",
+                    "name": "That Guy",
+                  },
                   "role": "Billy",
                 },
               ],
               "released": 1969,
-              "studio": "5d8e84208c930c12da7cd416",
+              "studio": Object {
+                "_id": "5d8e8c1620446f5fd8268aa7",
+                "name": "Creepy Hollywood Studio Inc",
+              },
               "title": "Some bad movie",
             }
           `);
         });
     });
+  });
+
+  it('gets all films', () => {
+    return Promise.all([postFilm(film), postFilm(film), postFilm(film)])
+      .then(() => {
+        return request.get('/api/films').expect(200);
+      })
+      .then(({ body }) => {
+        expect(body.length).toBe(3);
+        expect(body).toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "__v": 0,
+              "_id": "5d8e8c1620446f5fd8268aaf",
+              "cast": Array [
+                Object {
+                  "_id": "5d8e8c1620446f5fd8268ab0",
+                  "actor": Object {
+                    "_id": "5d8e8c1620446f5fd8268aab",
+                    "name": "That Guy",
+                  },
+                  "role": "Billy",
+                },
+              ],
+              "released": 1969,
+              "studio": Object {
+                "_id": "5d8e8c1620446f5fd8268aae",
+                "name": "Creepy Hollywood Studio Inc",
+              },
+              "title": "Some bad movie",
+            },
+            Object {
+              "__v": 0,
+              "_id": "5d8e8c1620446f5fd8268ab2",
+              "cast": Array [
+                Object {
+                  "_id": "5d8e8c1620446f5fd8268ab3",
+                  "actor": Object {
+                    "_id": "5d8e8c1620446f5fd8268aaa",
+                    "name": "That Guy",
+                  },
+                  "role": "Billy",
+                },
+              ],
+              "released": 1969,
+              "studio": Object {
+                "_id": "5d8e8c1620446f5fd8268aad",
+                "name": "Creepy Hollywood Studio Inc",
+              },
+              "title": "Some bad movie",
+            },
+            Object {
+              "__v": 0,
+              "_id": "5d8e8c1620446f5fd8268ab4",
+              "cast": Array [
+                Object {
+                  "_id": "5d8e8c1620446f5fd8268ab5",
+                  "actor": Object {
+                    "_id": "5d8e8c1620446f5fd8268aaa",
+                    "name": "That Guy",
+                  },
+                  "role": "Billy",
+                },
+              ],
+              "released": 1969,
+              "studio": Object {
+                "_id": "5d8e8c1620446f5fd8268ab1",
+                "name": "Creepy Hollywood Studio Inc",
+              },
+              "title": "Some bad movie",
+            },
+          ]
+        `);
+      });
   });
 });
