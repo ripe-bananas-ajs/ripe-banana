@@ -76,4 +76,61 @@ describe('actor api', () => {
       });
   });
 
+  it('will not delete an actor in a movie', () => {
+
+    const actor = {
+      name: 'That Guy',
+      dob: new Date('4/20/1969'),
+      pob: 'Springfield'
+    };
+  
+    const studio = {
+      name: 'Creepy Hollywood Studio Inc',
+      address: {
+        city: 'HollyLand',
+        state: 'Calirofnia',
+        country: 'Merica'
+      }
+    };
+  
+    const film = {
+      title: 'Some bad movie',
+      studio: '',
+      released: 1969,
+      cast: [
+        {
+          role: 'Billy'
+        }
+      ]
+    };
+
+    function postFilm(film) {
+      return request
+        .post('/api/actors')
+        .send(actor)
+        .expect(200)
+        .then(({ body }) => {
+          film.cast[0].actor = body._id;
+          return request
+            .post('/api/studios')
+            .send(studio)
+            .expect(200)
+            .then(({ body }) => {
+              film.studio = body._id;
+              return request
+                .post('/api/films')
+                .send(film)
+                .expect(200);
+            });
+        })
+        .then(({ body }) => body);
+    }
+
+
+    return postFilm(film)
+      .then(returnedFilm => {
+        return request.delete(`/api/actors/${returnedFilm.cast[0].actor}`)
+          .expect(400);
+      });
+  });
 });

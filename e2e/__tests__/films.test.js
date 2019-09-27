@@ -64,16 +64,16 @@ describe('film api', () => {
       expect(film).toMatchInlineSnapshot(`
         Object {
           "__v": 0,
-          "_id": "5d8e8c1620446f5fd8268aa4",
+          "_id": "5d8e9ccaa3fc1d12da2f88ce",
           "cast": Array [
             Object {
-              "_id": "5d8e8c1620446f5fd8268aa5",
-              "actor": "5d8e8c1620446f5fd8268aa2",
+              "_id": "5d8e9ccaa3fc1d12da2f88cf",
+              "actor": "5d8e9ccaa3fc1d12da2f88cc",
               "role": "Billy",
             },
           ],
           "released": 1969,
-          "studio": "5d8e8c1620446f5fd8268aa3",
+          "studio": "5d8e9ccaa3fc1d12da2f88cd",
           "title": "Some bad movie",
         }
       `);
@@ -89,12 +89,12 @@ describe('film api', () => {
           expect(body).toMatchInlineSnapshot(`
             Object {
               "__v": 0,
-              "_id": "5d8e8c1620446f5fd8268aa8",
+              "_id": "5d8e9ccaa3fc1d12da2f88d2",
               "cast": Array [
                 Object {
-                  "_id": "5d8e8c1620446f5fd8268aa9",
+                  "_id": "5d8e9ccaa3fc1d12da2f88d3",
                   "actor": Object {
-                    "_id": "5d8e8c1620446f5fd8268aa6",
+                    "_id": "5d8e9ccaa3fc1d12da2f88d0",
                     "name": "That Guy",
                   },
                   "role": "Billy",
@@ -102,7 +102,7 @@ describe('film api', () => {
               ],
               "released": 1969,
               "studio": Object {
-                "_id": "5d8e8c1620446f5fd8268aa7",
+                "_id": "5d8e9ccaa3fc1d12da2f88d1",
                 "name": "Creepy Hollywood Studio Inc",
               },
               "title": "Some bad movie",
@@ -123,12 +123,12 @@ describe('film api', () => {
           Array [
             Object {
               "__v": 0,
-              "_id": "5d8e8c1620446f5fd8268aaf",
+              "_id": "5d8e9ccba3fc1d12da2f88d9",
               "cast": Array [
                 Object {
-                  "_id": "5d8e8c1620446f5fd8268ab0",
+                  "_id": "5d8e9ccba3fc1d12da2f88da",
                   "actor": Object {
-                    "_id": "5d8e8c1620446f5fd8268aab",
+                    "_id": "5d8e9ccaa3fc1d12da2f88d6",
                     "name": "That Guy",
                   },
                   "role": "Billy",
@@ -136,19 +136,19 @@ describe('film api', () => {
               ],
               "released": 1969,
               "studio": Object {
-                "_id": "5d8e8c1620446f5fd8268aae",
+                "_id": "5d8e9ccba3fc1d12da2f88d8",
                 "name": "Creepy Hollywood Studio Inc",
               },
               "title": "Some bad movie",
             },
             Object {
               "__v": 0,
-              "_id": "5d8e8c1620446f5fd8268ab2",
+              "_id": "5d8e9ccba3fc1d12da2f88dc",
               "cast": Array [
                 Object {
-                  "_id": "5d8e8c1620446f5fd8268ab3",
+                  "_id": "5d8e9ccba3fc1d12da2f88dd",
                   "actor": Object {
-                    "_id": "5d8e8c1620446f5fd8268aaa",
+                    "_id": "5d8e9ccaa3fc1d12da2f88d4",
                     "name": "That Guy",
                   },
                   "role": "Billy",
@@ -156,19 +156,19 @@ describe('film api', () => {
               ],
               "released": 1969,
               "studio": Object {
-                "_id": "5d8e8c1620446f5fd8268aad",
+                "_id": "5d8e9ccba3fc1d12da2f88d7",
                 "name": "Creepy Hollywood Studio Inc",
               },
               "title": "Some bad movie",
             },
             Object {
               "__v": 0,
-              "_id": "5d8e8c1620446f5fd8268ab4",
+              "_id": "5d8e9ccba3fc1d12da2f88de",
               "cast": Array [
                 Object {
-                  "_id": "5d8e8c1620446f5fd8268ab5",
+                  "_id": "5d8e9ccba3fc1d12da2f88df",
                   "actor": Object {
-                    "_id": "5d8e8c1620446f5fd8268aaa",
+                    "_id": "5d8e9ccaa3fc1d12da2f88d4",
                     "name": "That Guy",
                   },
                   "role": "Billy",
@@ -176,7 +176,7 @@ describe('film api', () => {
               ],
               "released": 1969,
               "studio": Object {
-                "_id": "5d8e8c1620446f5fd8268ab1",
+                "_id": "5d8e9ccba3fc1d12da2f88db",
                 "name": "Creepy Hollywood Studio Inc",
               },
               "title": "Some bad movie",
@@ -184,5 +184,11 @@ describe('film api', () => {
           ]
         `);
       });
+  });
+
+  it('deletes a film', () => {
+    return postFilm(film).then(film => {
+      return request.delete(`/api/films/${film._id}`).expect(200);
+    });
   });
 });
