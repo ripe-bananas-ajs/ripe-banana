@@ -1,6 +1,6 @@
 const request = require('../request');
 const db = require('../db');
-const { ObjectId } = require('mongoose').Types;
+// const { ObjectId } = require('mongoose').Types;
 
 describe('film api', () => {
   beforeEach(() => {
@@ -37,7 +37,7 @@ describe('film api', () => {
     ]
   };
 
-  it('posting a film', () => {
+  function postFilm(film) {
     return request
       .post('/api/actors')
       .send(actor)
@@ -56,23 +56,53 @@ describe('film api', () => {
               .expect(200);
           });
       })
-      .then(film => {
-        expect(film.body).toMatchInlineSnapshot(`
-          Object {
-            "__v": 0,
-            "_id": "5d8e80f5f3d4df0fdf9acfb2",
-            "cast": Array [
-              Object {
-                "_id": "5d8e80f5f3d4df0fdf9acfb3",
-                "actor": "5d8e80f5f3d4df0fdf9acfb0",
-                "role": "Billy",
-              },
-            ],
-            "released": 1969,
-            "studio": "5d8e80f5f3d4df0fdf9acfb1",
-            "title": "Some bad movie",
-          }
-        `);
-      });
+      .then(({ body }) => body);
+  }
+
+  it('posting a film', () => {
+    return postFilm(film).then(film => {
+      expect(film).toMatchInlineSnapshot(`
+        Object {
+          "__v": 0,
+          "_id": "5d8e84208c930c12da7cd413",
+          "cast": Array [
+            Object {
+              "_id": "5d8e84208c930c12da7cd414",
+              "actor": "5d8e84208c930c12da7cd411",
+              "role": "Billy",
+            },
+          ],
+          "released": 1969,
+          "studio": "5d8e84208c930c12da7cd412",
+          "title": "Some bad movie",
+        }
+      `);
+    });
+  });
+
+  it('gets by id', () => {
+    return postFilm(film).then(savedFilm => {
+      return request
+        .get(`/api/films/${savedFilm._id}`)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toMatchInlineSnapshot(`
+            Object {
+              "__v": 0,
+              "_id": "5d8e84208c930c12da7cd417",
+              "cast": Array [
+                Object {
+                  "_id": "5d8e84208c930c12da7cd418",
+                  "actor": "5d8e84208c930c12da7cd415",
+                  "role": "Billy",
+                },
+              ],
+              "released": 1969,
+              "studio": "5d8e84208c930c12da7cd416",
+              "title": "Some bad movie",
+            }
+          `);
+        });
+    });
   });
 });
