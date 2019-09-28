@@ -60,22 +60,34 @@ describe('film api', () => {
 
   it('posting a film', () => {
     return postFilm(film).then(film => {
-      expect(film).toMatchInlineSnapshot(`
+      expect(film).toMatchInlineSnapshot(
+        {
+          _id: expect.any(String),
+          studio: expect.any(String),
+          cast: [
+            {
+              _id: expect.any(String),
+              actor: expect.any(String)
+            }
+          ]
+        },
+        `
         Object {
           "__v": 0,
-          "_id": "5d8ea93e2e14bc6bbe3bd677",
+          "_id": Any<String>,
           "cast": Array [
             Object {
-              "_id": "5d8ea93e2e14bc6bbe3bd678",
-              "actor": "5d8ea93e2e14bc6bbe3bd675",
+              "_id": Any<String>,
+              "actor": Any<String>,
               "role": "Billy",
             },
           ],
           "released": 1969,
-          "studio": "5d8ea93e2e14bc6bbe3bd676",
+          "studio": Any<String>,
           "title": "Some bad movie",
         }
-      `);
+      `
+      );
     });
   });
 
@@ -85,28 +97,34 @@ describe('film api', () => {
         .get(`/api/films/${savedFilm._id}`)
         .expect(200)
         .then(({ body }) => {
-          expect(body).toMatchInlineSnapshot(`
+          expect(body).toMatchInlineSnapshot(
+            {
+              _id: expect.any(String),
+              studio: expect.any(String),
+              cast: [
+                {
+                  _id: expect.any(String),
+                  actor: expect.any(String)
+                }
+              ]
+            },
+            `
             Object {
               "__v": 0,
-              "_id": "5d8ea93e2e14bc6bbe3bd67b",
+              "_id": Any<String>,
               "cast": Array [
                 Object {
-                  "_id": "5d8ea93e2e14bc6bbe3bd67c",
-                  "actor": Object {
-                    "_id": "5d8ea93e2e14bc6bbe3bd679",
-                    "name": "That Guy",
-                  },
+                  "_id": Any<String>,
+                  "actor": Any<String>,
                   "role": "Billy",
                 },
               ],
               "released": 1969,
-              "studio": Object {
-                "_id": "5d8ea93e2e14bc6bbe3bd67a",
-                "name": "Creepy Hollywood Studio Inc",
-              },
+              "studio": Any<String>,
               "title": "Some bad movie",
             }
-          `);
+          `
+          );
         });
     });
   });
@@ -118,70 +136,28 @@ describe('film api', () => {
       })
       .then(({ body }) => {
         expect(body.length).toBe(3);
-        expect(body).toMatchInlineSnapshot(`
-          Array [
-            Object {
-              "__v": 0,
-              "_id": "5d8ea2c138ea4a431e2f488e",
-              "cast": Array [
-                Object {
-                  "_id": "5d8ea2c138ea4a431e2f488f",
-                  "actor": Object {
-                    "_id": "5d8ea2c138ea4a431e2f488a",
-                    "name": "That Guy",
-                  },
-                  "role": "Billy",
-                },
-              ],
-              "released": 1969,
-              "studio": Object {
-                "_id": "5d8ea2c138ea4a431e2f488d",
-                "name": "Creepy Hollywood Studio Inc",
-              },
-              "title": "Some bad movie",
+        const anyId = {
+          _id: expect.any(String)
+        };
+        const matchFilm = {
+          ...anyId,
+          studio: anyId
+        };
+        expect(body.length).toBe(3);
+        expect(body[0]).toMatchInlineSnapshot(
+          matchFilm,
+          `
+          Object {
+            "_id": Any<String>,
+            "released": 1969,
+            "studio": Object {
+              "_id": Any<String>,
+              "name": "Creepy Hollywood Studio Inc",
             },
-            Object {
-              "__v": 0,
-              "_id": "5d8ea2c138ea4a431e2f4891",
-              "cast": Array [
-                Object {
-                  "_id": "5d8ea2c138ea4a431e2f4892",
-                  "actor": Object {
-                    "_id": "5d8ea2c138ea4a431e2f4889",
-                    "name": "That Guy",
-                  },
-                  "role": "Billy",
-                },
-              ],
-              "released": 1969,
-              "studio": Object {
-                "_id": "5d8ea2c138ea4a431e2f488c",
-                "name": "Creepy Hollywood Studio Inc",
-              },
-              "title": "Some bad movie",
-            },
-            Object {
-              "__v": 0,
-              "_id": "5d8ea2c138ea4a431e2f4893",
-              "cast": Array [
-                Object {
-                  "_id": "5d8ea2c138ea4a431e2f4894",
-                  "actor": Object {
-                    "_id": "5d8ea2c138ea4a431e2f4889",
-                    "name": "That Guy",
-                  },
-                  "role": "Billy",
-                },
-              ],
-              "released": 1969,
-              "studio": Object {
-                "_id": "5d8ea2c138ea4a431e2f4890",
-                "name": "Creepy Hollywood Studio Inc",
-              },
-              "title": "Some bad movie",
-            },
-          ]
-        `);
+            "title": "Some bad movie",
+          }
+        `
+        );
       });
   });
 
