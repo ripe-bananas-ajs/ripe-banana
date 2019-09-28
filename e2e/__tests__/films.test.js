@@ -1,6 +1,5 @@
 const request = require('../request');
 const db = require('../db');
-// const { ObjectId } = require('mongoose').Types;
 
 describe('film api', () => {
   beforeEach(() => {
@@ -64,16 +63,16 @@ describe('film api', () => {
       expect(film).toMatchInlineSnapshot(`
         Object {
           "__v": 0,
-          "_id": "5d8ea2c038ea4a431e2f4883",
+          "_id": "5d8ea93e2e14bc6bbe3bd677",
           "cast": Array [
             Object {
-              "_id": "5d8ea2c038ea4a431e2f4884",
-              "actor": "5d8ea2c038ea4a431e2f4881",
+              "_id": "5d8ea93e2e14bc6bbe3bd678",
+              "actor": "5d8ea93e2e14bc6bbe3bd675",
               "role": "Billy",
             },
           ],
           "released": 1969,
-          "studio": "5d8ea2c038ea4a431e2f4882",
+          "studio": "5d8ea93e2e14bc6bbe3bd676",
           "title": "Some bad movie",
         }
       `);
@@ -89,12 +88,12 @@ describe('film api', () => {
           expect(body).toMatchInlineSnapshot(`
             Object {
               "__v": 0,
-              "_id": "5d8ea2c138ea4a431e2f4887",
+              "_id": "5d8ea93e2e14bc6bbe3bd67b",
               "cast": Array [
                 Object {
-                  "_id": "5d8ea2c138ea4a431e2f4888",
+                  "_id": "5d8ea93e2e14bc6bbe3bd67c",
                   "actor": Object {
-                    "_id": "5d8ea2c138ea4a431e2f4885",
+                    "_id": "5d8ea93e2e14bc6bbe3bd679",
                     "name": "That Guy",
                   },
                   "role": "Billy",
@@ -102,7 +101,7 @@ describe('film api', () => {
               ],
               "released": 1969,
               "studio": Object {
-                "_id": "5d8ea2c138ea4a431e2f4886",
+                "_id": "5d8ea93e2e14bc6bbe3bd67a",
                 "name": "Creepy Hollywood Studio Inc",
               },
               "title": "Some bad movie",
