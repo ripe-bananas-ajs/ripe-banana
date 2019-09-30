@@ -51,7 +51,6 @@ describe('film api', () => {
   function postReview(review) {
     return postFilm(film)
       .then(body => {
-        console.log(body);
         review.film = body._id;
         return request
           .post('/api/reviewers')
