@@ -4,8 +4,8 @@
 ### Author: Joe, Sam and Abbey
 
 ### Links and Resources
-* [submission PR] ()
-* [travis] ()
+* [submission PR] (https://github.com/ripe-bananas-ajs/ripe-banana/pull/4)
+* [travis] (https://travis-ci.org/ripe-bananas-ajs/ripe-banana/builds/591600554?utm_source=github_status&utm_medium=notification)
 * [heroku] (https://ripe-banana-2019.herokuapp.com/)
 
 #### Running the app
