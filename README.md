@@ -5,7 +5,7 @@
 
 ### Links and Resources
 * [submission PR] (https://github.com/ripe-bananas-ajs/ripe-banana/pull/4)
-* [travis] (https://travis-ci.org/ripe-bananas-ajs/ripe-banana/builds/591600554?utm_source=github_status&utm_medium=notification)
+* [travis] (https://travis-ci.org/ripe-bananas-ajs/ripe-banana)
 * [heroku] (https://ripe-banana-2019.herokuapp.com/)
 
 #### Running the app

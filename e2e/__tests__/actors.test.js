@@ -89,26 +89,28 @@ describe('actor api', () => {
   });
 
   it('gets actor by id', () => {
-    return postActor(actor).then(returnedActor => {
-      film.cast[0] = {
-        _id: returnedActor._id
-      };
-      return postFilm(film)
-        .then(() => {
-          return request.get(`/api/actors/${returnedActor._id}`).expect(200);
-        })
-        .then(({ body }) => {
-          expect(body).toMatchInlineSnapshot(
-            {
-              _id: expect.any(String),
-              dob: expect.any(String),
-              films: [
-                {
-                  _id: expect.any(String)
-                }
-              ]
-            },
-            `
+    return postActor(actor)
+      .then(returnedActor => {
+        film.cast[0] = {
+          _id: returnedActor._id
+        };
+        return postFilm(film)
+          .then(() => {
+            return request.get(`/api/actors/${returnedActor._id}`)
+              .expect(200);
+          })
+          .then(({ body }) => {
+            expect(body).toMatchInlineSnapshot(
+              {
+                _id: expect.any(String),
+                dob: expect.any(String),
+                films: [
+                  {
+                    _id: expect.any(String)
+                  }
+                ]
+              },
+              `
             Object {
               "__v": 0,
               "_id": Any<String>,
@@ -124,9 +126,9 @@ describe('actor api', () => {
               "pob": "Springfield",
             }
           `
-          );
-        });
-    });
+            );
+          });
+      });
   });
 
   it('deletes an actor', () => {
