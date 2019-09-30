@@ -100,23 +100,27 @@ describe('film api', () => {
           expect(body).toMatchInlineSnapshot(
             {
               _id: expect.any(String),
-              studio: expect.any(String),
+              studio: {
+                _id: expect.any(String)
+              },
               cast: [
                 {
                   _id: expect.any(String),
-                  actor: expect.any(String)
+                  actor: {
+                    _id: expect.any(String)
+                  }
                 }
-              ],
+              ]
             },
             `
             Object {
               "__v": 0,
-              "_id": "5d922a3be9f77308fcf3caaa",
+              "_id": Any<String>,
               "cast": Array [
                 Object {
-                  "_id": "5d922a3be9f77308fcf3caab",
+                  "_id": Any<String>,
                   "actor": Object {
-                    "_id": "5d922a3be9f77308fcf3caa8",
+                    "_id": Any<String>,
                     "name": "That Guy",
                   },
                   "role": "Billy",
@@ -124,12 +128,13 @@ describe('film api', () => {
               ],
               "released": 1969,
               "studio": Object {
-                "_id": "5d922a3be9f77308fcf3caa9",
+                "_id": Any<String>,
                 "name": "Creepy Hollywood Studio Inc",
               },
               "title": "Some bad movie",
             }
-          `);
+          `
+          );
         });
     });
   });
