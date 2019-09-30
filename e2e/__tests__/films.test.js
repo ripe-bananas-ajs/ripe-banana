@@ -46,14 +46,15 @@ describe('film api', () => {
         return request
           .post('/api/studios')
           .send(studio)
-          .expect(200)
-          .then(({ body }) => {
-            film.studio = body._id;
-            return request
-              .post('/api/films')
-              .send(film)
-              .expect(200);
-          });
+          .expect(200);
+      })
+      .then(({ body }) => {
+        film.studio = body._id;
+        return request
+          .post('/api/films')
+          .send(film)
+          .expect(200);
+
       })
       .then(({ body }) => body);
   }

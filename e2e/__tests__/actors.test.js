@@ -54,17 +54,19 @@ describe('actor api', () => {
 
   it('gets actor by id', () => {
     return postActor(actor)
-      .then(actor => {
+      .then(returnedActor => {
         return request
-          .get(`/api/actors/${actor._id}`)
-          .expect(200)
-          .then(({ body }) => {
-            expect(body).toEqual({
-              _id: expect.any(String),
-              __v: 0,
-              ...actor
-            });
-          });
+          .get(`/api/actors/${returnedActor._id}`)
+          .expect(200);
+      })
+      .then(({ body }) => {
+        expect(body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          dob: '1860-04-20T07:52:58.000Z',
+          name: 'joe',
+          pob: 'Springfield',
+        });
       });
   });
 
@@ -83,7 +85,7 @@ describe('actor api', () => {
       dob: new Date('4/20/1969'),
       pob: 'Springfield'
     };
-  
+
     const studio = {
       name: 'Creepy Hollywood Studio Inc',
       address: {
@@ -92,7 +94,7 @@ describe('actor api', () => {
         country: 'Merica'
       }
     };
-  
+
     const film = {
       title: 'Some bad movie',
       studio: '',
@@ -114,14 +116,14 @@ describe('actor api', () => {
           return request
             .post('/api/studios')
             .send(studio)
-            .expect(200)
-            .then(({ body }) => {
-              film.studio = body._id;
-              return request
-                .post('/api/films')
-                .send(film)
-                .expect(200);
-            });
+            .expect(200);
+        })
+        .then(({ body }) => {
+          film.studio = body._id;
+          return request
+            .post('/api/films')
+            .send(film)
+            .expect(200);
         })
         .then(({ body }) => body);
     }

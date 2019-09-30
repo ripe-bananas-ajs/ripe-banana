@@ -48,14 +48,14 @@ describe('review api', () => {
         return request
           .post('/api/reviewers')
           .send(reviewer)
-          .expect(200)
-          .then(({ body }) => {
-            review.reviewer = body._id;
-            return request
-              .post('/api/reviews')
-              .send(review)
-              .expect(200);
-          });
+          .expect(200);
+      })
+      .then(({ body }) => {
+        review.reviewer = body._id;
+        return request
+          .post('/api/reviews')
+          .send(review)
+          .expect(200);
       })
       .then(({ body }) => body);
   }

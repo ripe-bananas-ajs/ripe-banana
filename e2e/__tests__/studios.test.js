@@ -59,14 +59,14 @@ describe('studios api', () => {
       .then(studio => {
         return request
           .get(`/api/studios/${studio._id}`)
-          .expect(200)
-          .then(({ body }) => {
-            expect(body).toEqual({
-              _id: expect.any(String),
-              __v: 0,
-              ...data
-            });
-          });
+          .expect(200);
+      })
+      .then(({ body }) => {
+        expect(body).toEqual({
+          _id: expect.any(String),
+          __v: 0,
+          ...data
+        });
       });
   });
 
@@ -117,14 +117,14 @@ describe('studios api', () => {
           return request
             .post('/api/studios')
             .send(studio)
-            .expect(200)
-            .then(({ body }) => {
-              film.studio = body._id;
-              return request
-                .post('/api/films')
-                .send(film)
-                .expect(200);
-            });
+            .expect(200);
+        })
+        .then(({ body }) => {
+          film.studio = body._id;
+          return request
+            .post('/api/films')
+            .send(film)
+            .expect(200);
         })
         .then(({ body }) => body);
     }

@@ -57,14 +57,14 @@ describe('reviewers api', () => {
       .then(reviewer => {
         return request
           .get(`/api/reviewers/${reviewer._id}`)
-          .expect(200)
-          .then(({ body }) => {
-            expect(body).toEqual({
-              _id: expect.any(String),
-              __v: 0,
-              ...data
-            });
-          });
+          .expect(200);
+      })
+      .then(({ body }) => {
+        expect(body).toEqual({
+          _id: expect.any(String),
+          __v: 0,
+          ...data
+        });
       });
   });
 
