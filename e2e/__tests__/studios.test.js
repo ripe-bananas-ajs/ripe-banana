@@ -91,7 +91,6 @@ describe('studios api', () => {
   it('gets one studio by id', () => {
     return postFilm(film)
       .then(newFilm => {
-        console.log(newFilm);
         return request.get(`/api/studios/${newFilm.studio}`).expect(200);
       })
       .then(({ body }) => {

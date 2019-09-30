@@ -10,6 +10,18 @@ describe('film api', () => {
     ]);
   });
 
+  const reviewer = {
+    name: 'Joe',
+    company: `Joe's All American Pie and Movie Review Shack`
+  };
+
+  const review = {
+    rating: 4,
+    reviewer: '',
+    review: 'This movie gave me scabies',
+    film: ''
+  };
+
   const actor = {
     name: 'That Guy',
     dob: new Date('4/20/1969'),
@@ -36,6 +48,28 @@ describe('film api', () => {
     ]
   };
 
+  function postReview(review) {
+    return postFilm(film)
+      .then(body => {
+        console.log(body);
+        review.film = body._id;
+        return request
+          .post('/api/reviewers')
+          .send(reviewer)
+          .expect(200);
+      })
+      .then(({ body }) => {
+        review.reviewer = body._id;
+        return request
+          .post('/api/reviews')
+          .send(review)
+          .expect(200);
+      })
+      .then(({ body }) => {
+        return body;
+      });
+  }
+
   function postFilm(film) {
     return request
       .post('/api/actors')
@@ -54,7 +88,6 @@ describe('film api', () => {
           .post('/api/films')
           .send(film)
           .expect(200);
-
       })
       .then(({ body }) => body);
   }
@@ -93,9 +126,9 @@ describe('film api', () => {
   });
 
   it('gets by id', () => {
-    return postFilm(film).then(savedFilm => {
+    return postReview(review).then(body => {
       return request
-        .get(`/api/films/${savedFilm._id}`)
+        .get(`/api/films/${body.film}`)
         .expect(200)
         .then(({ body }) => {
           expect(body).toMatchInlineSnapshot(
@@ -110,6 +143,13 @@ describe('film api', () => {
                   actor: {
                     _id: expect.any(String)
                   }
+                }
+              ],
+              review: [
+                {
+                  _id: expect.any(String),
+                  film: expect.any(String),
+                  reviewer: expect.any(String)
                 }
               ]
             },
@@ -128,6 +168,16 @@ describe('film api', () => {
                 },
               ],
               "released": 1969,
+              "review": Array [
+                Object {
+                  "__v": 0,
+                  "_id": Any<String>,
+                  "film": Any<String>,
+                  "rating": 4,
+                  "review": "This movie gave me scabies",
+                  "reviewer": Any<String>,
+                },
+              ],
               "studio": Object {
                 "_id": Any<String>,
                 "name": "Creepy Hollywood Studio Inc",
