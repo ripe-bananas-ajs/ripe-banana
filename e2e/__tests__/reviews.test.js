@@ -77,16 +77,23 @@ describe('review api', () => {
       })
       .then(({ body }) => {
         expect(body.length).toBe(2);
-        expect(body[0]).toMatchInlineSnapshot(`
+        expect(body[0]).toMatchInlineSnapshot(
+          {
+            _id: expect.any(String),
+            film: expect.any(String),
+            reviewer: expect.any(String),
+          },
+          `
           Object {
             "__v": 0,
-            "_id": "5d8eb64e8835d81fcb2c277d",
-            "film": "5d8eb64e8835d81fcb2c2777",
+            "_id": Any<String>,
+            "film": Any<String>,
             "rating": 4,
             "review": "die laughing and crying with poo in mouth",
-            "reviewer": "5d8eb64e8835d81fcb2c277b",
+            "reviewer": Any<String>,
           }
-        `);
+        `
+        );
       });
   });
 });
