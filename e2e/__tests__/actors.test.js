@@ -101,6 +101,7 @@ describe('actor api', () => {
           expect(body).toMatchInlineSnapshot(
             {
               _id: expect.any(String),
+              dob: expect.any(String),
               films: [
                 {
                   _id: expect.any(String)
@@ -111,7 +112,7 @@ describe('actor api', () => {
             Object {
               "__v": 0,
               "_id": Any<String>,
-              "dob": "1860-04-20T07:52:58.000Z",
+              "dob": Any<String>,
               "films": Array [
                 Object {
                   "_id": Any<String>,
