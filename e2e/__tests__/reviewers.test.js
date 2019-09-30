@@ -45,7 +45,6 @@ describe('reviewers api', () => {
         expect(body.length).toBe(2);
         expect(body[0]).toEqual({
           _id: expect.any(String),
-          __v: 0,
           name: 'joe',
           company: 'joe co'
         });
